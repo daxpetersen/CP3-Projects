@@ -1,4 +1,5 @@
 import random,time,curses
+print("Hello")
 map_height = 10  
 map_width = 15   
 player_health = 100
