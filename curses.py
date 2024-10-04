@@ -1,4 +1,4 @@
-import random,time,curses
+import random,time
 print("Hello")
 map_height = 10  
 map_width = 15   
@@ -102,22 +102,22 @@ def show_grid(grid, stdscr):
 def main(stdscr):
     global key_found, weapon_damage, player_health, player_coins, monster_health    
     grid = init_grid()    
-    curses.curs_set(0)
     stdscr.nodelay(True)
     stdscr.timeout(200)    
     while True:
         show_grid(grid, stdscr)        
         stdscr.addstr(map_height + 1, 0, f"Health: {player_health}, Coins: {player_coins}, Weapon Damage: {weapon_damage}, Monster Health: {monster_health}")        
         key = stdscr.getch()
-        if key == curses.KEY_UP:
+        play = input("gfdsgfdg")
+        if play == "w":
             move_player(grid, 'up')
-        elif key == curses.KEY_DOWN:
+        elif play == "s":
             move_player(grid, 'down')
-        elif key == curses.KEY_LEFT:
+        elif play == "a":
             move_player(grid, 'left')
-        elif key == curses.KEY_RIGHT:
+        elif play == "d":
             move_player(grid, 'right')
-        elif key == ord(' '):  
+        if key == ord(' '):  
             player_attack(stdscr)        
         current_tile = grid[player_pos[0]][player_pos[1]]
         if current_tile == 'K':
@@ -144,4 +144,4 @@ def main(stdscr):
             stdscr.refresh()
             time.sleep(1)
             break
-curses.wrapper(main)
+print(main(2))
