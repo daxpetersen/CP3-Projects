@@ -1,0 +1,40 @@
+
+UML: Unified Modeling Language
+Standardized notation to use by object orienting
+structure diamgram:
+    Composite
+    deployment
+    Packaging
+    Profile
+    Class
+    object
+    Component
+
+and 
+ 
+behavior diamgram:
+    Activity
+    use case
+    State Machiene
+Interaction:
+    Sequence
+    Communication
+    Interaction
+    timing
+
+Class diagram is central modleing technique
+this help associate relation between someting like a customer to their money
+
+
+class name
+    attributes
+    modules
+    base value is not required
+    data type is required, for instance string or int
+
+    operations
+    methods
++ public is visible to all classes
+- private is only callable inside one class, the class it is assigned
+# protected in the subclass
+
