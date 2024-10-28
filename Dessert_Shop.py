@@ -21,5 +21,5 @@ class icecream(dessert):
 class sprinkles(icecream):
     value += 8.25
     x = 5
-
+print(candy("dax",1))
     
