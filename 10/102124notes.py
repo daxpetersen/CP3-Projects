@@ -4,6 +4,7 @@ class PetStore:
         self.animals = []
     name = "Pet Smart"
     def add_pet(self, animal):
+        #assert is like an if statement that says if animal is not in Animal than don't run the rest of this function
         assert isinstance(animal, Animal)
         self.animals.append(animal)
     
@@ -81,5 +82,5 @@ store.add_pet(Turtle("Straw"))
 store.add_pet(Turtle("Flash"))
 store.add_pet(Cat("Joe"))
 store.add_pet(Snake("Robin"))
-
+store.featured("Flash")
 
