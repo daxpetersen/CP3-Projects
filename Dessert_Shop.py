@@ -1,53 +1,72 @@
-# dessert.py
+from Dessert import Candy, Cookie, IceCream, Sundae, Order
 
-class DessertItem:
-    def __init__(self, name):
-        self.name = name
+def main():
+    order = Order()
 
-class Candy(DessertItem):
-    def __init__(self, name, weight, price_per_pound):
-        super().__init__(name)
-        self.weight = weight
-        self.price_per_pound = price_per_pound
+    while True:
+        print("Choose a dessert to add to your order:")
+        print("1. Candy")
+        print("2. Cookie")
+        print("3. Ice Cream")
+        print("4. Sundae")
+        print("5. Finish Order")
 
-    def calculate_cost(self):
-        return self.weight * self.price_per_pound
+        choice = input("Enter your choice (1-5): ")
 
-class Cookie(DessertItem):
-    def __init__(self, name, quantity, price_per_dozen):
-        super().__init__(name)
-        self.quantity = quantity
-        self.price_per_dozen = price_per_dozen
+        if choice == '1':
+            print("\nAvailable Candies:")
+            print("1. Candy Corn")
+            print("2. Gummy Bears")
+            print("3. Chocolate")
+            name = input("Enter candy name: ")
+            weight = float(input("Enter amount of pounds: "))
+            price_per_pound = float(input("Enter price per pound: "))
+            order.add(Candy(name, weight, price_per_pound))
 
-    def calculate_cost(self):
-        return (self.quantity / 12) * self.price_per_dozen
+        elif choice == '2':
+            print("\nAvailable Cookies:")
+            print("1. Chocolate Chip")
+            print("2. Oatmeal Raisin")
+            print("3. Peanut Butter")
+            name = input("Enter cookie name: ")
+            quantity = int(input("Enter quantity: "))
+            price_per_dozen = float(input("Enter price per dozen: "))
+            order.add(Cookie(name, quantity, price_per_dozen))
 
-class IceCream(DessertItem):
-    def __init__(self, name, scoops, price_per_scoop):
-        super().__init__(name)
-        self.scoops = scoops
-        self.price_per_scoop = price_per_scoop
+        elif choice == '3':
+            print("\nAvailable Ice Cream Flavors:")
+            print("1. Vanilla")
+            print("2. Chocolate")
+            print("3. Pistachio")
+            print("4. Strawberry")
+            name = input("Enter ice cream flavor: ")
+            scoops = int(input("Enter number of scoops: "))
+            price_per_scoop = float(input("Enter price per scoop: "))
+            order.add(IceCream(name, scoops, price_per_scoop))
 
-    def calculate_cost(self):
-        return self.scoops * self.price_per_scoop
+        elif choice == '4':
+            print("\nAvailable Sundae Flavors:")
+            print("1. Vanilla")
+            print("2. Chocolate")
+            print("3. Strawberry")
+            name = input("Enter sundae flavor: ")
+            scoops = int(input("Enter number of scoops: "))
+            price_per_scoop = float(input("Enter price per scoop: "))
+            topping_name = input("Enter topping name: ")
+            topping_price = float(input("Enter topping price: "))
+            order.add(Sundae(name, scoops, price_per_scoop, topping_name, topping_price))
 
-class Sundae(IceCream):
-    def __init__(self, name, scoops, price_per_scoop, topping_name, topping_price):
-        super().__init__(name, scoops, price_per_scoop)
-        self.topping_name = topping_name
-        self.topping_price = topping_price
+        elif choice == '5':
+            break
 
-    def calculate_cost(self):
-        return super().calculate_cost() + self.topping_price
+        else:
+            print("Invalid choice, please try again.")
 
-class Order:
-    def __init__(self):
-        self.order = []
+    print("\nYour order:")
+    for item in order.order:
+        print(item.name)
 
-    def add(self, dessert_item):
-        self.order.append(dessert_item)
+    print("Total number of items in order:", len(order))
 
-    def __len__(self):
-        return len(self.order)
-
-
+if __name__ == "__main__":
+    main()
