@@ -1,68 +1,53 @@
 # dessert.py
 
 class DessertItem:
-    def __init__(self, name: str):
+    def __init__(self, name):
         self.name = name
 
 class Candy(DessertItem):
-    def __init__(self, name: str, candy_weight: float, price_per_pound: float):
+    def __init__(self, name, weight, price_per_pound):
         super().__init__(name)
-        self.candy_weight = candy_weight
+        self.weight = weight
         self.price_per_pound = price_per_pound
 
     def calculate_cost(self):
-        return self.candy_weight * self.price_per_pound
+        return self.weight * self.price_per_pound
 
 class Cookie(DessertItem):
-    def __init__(self, name: str, cookie_quantity: int, price_per_dozen: float):
+    def __init__(self, name, quantity, price_per_dozen):
         super().__init__(name)
-        self.cookie_quantity = cookie_quantity
+        self.quantity = quantity
         self.price_per_dozen = price_per_dozen
 
     def calculate_cost(self):
-        return (self.cookie_quantity / 12) * self.price_per_dozen
+        return (self.quantity / 12) * self.price_per_dozen
 
 class IceCream(DessertItem):
-    def __init__(self, name: str, scoop_count: int, price_per_scoop: float):
+    def __init__(self, name, scoops, price_per_scoop):
         super().__init__(name)
-        self.scoop_count = scoop_count
+        self.scoops = scoops
         self.price_per_scoop = price_per_scoop
 
     def calculate_cost(self):
-        return self.scoop_count * self.price_per_scoop
+        return self.scoops * self.price_per_scoop
 
 class Sundae(IceCream):
-    def __init__(self, name: str, scoop_count: int, price_per_scoop: float, topping_name: str, topping_price: float):
-        super().__init__(name, scoop_count, price_per_scoop)
+    def __init__(self, name, scoops, price_per_scoop, topping_name, topping_price):
+        super().__init__(name, scoops, price_per_scoop)
         self.topping_name = topping_name
         self.topping_price = topping_price
 
     def calculate_cost(self):
         return super().calculate_cost() + self.topping_price
-# test_dessert.py
-# testing part
-from dessert import Candy, Cookie, IceCream, Sundae
 
-def test_candy():
-    candy_item = Candy("Chocolate", 2.5, 3.00)
-    assert candy_item.calculate_cost() == 7.5
-    assert candy_item.name == "Chocolate"
-    assert candy_item.candy_weight == 2.5
+class Order:
+    def __init__(self):
+        self.order = []
 
-def test_cookie():
-    cookie_item = Cookie("Oatmeal Raisin", 24, 5.00)
-    assert cookie_item.calculate_cost() == 10.0
-    assert cookie_item.name == "Oatmeal Raisin"
-    assert cookie_item.cookie_quantity == 24
+    def add(self, dessert_item):
+        self.order.append(dessert_item)
 
-def test_ice_cream():
-    ice_cream_item = IceCream("Vanilla", 3, 2.50)
-    assert ice_cream_item.calculate_cost() == 7.5
-    assert ice_cream_item.name == "Vanilla"
-    assert ice_cream_item.scoop_count == 3
+    def __len__(self):
+        return len(self.order)
 
-def test_sundae():
-    sundae_item = Sundae("Strawberry", 2, 2.50, "Whipped Cream", 1.00)
-    assert sundae_item.calculate_cost() == 6.0  # 5.0 for ice cream + 1.0 for topping
-    assert sundae_item.name == "Strawberry"
-    assert sundae_item.topping_name == "Whipped Cream"
+
