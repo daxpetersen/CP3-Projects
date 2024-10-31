@@ -122,7 +122,11 @@ def counting():
     print("Comparisons:", comparisons)
     print("Swaps:", swaps)
 
-code = input("what sort? ")
+code = input("""which sort: 
+pigeon
+bubble
+selection
+counting""")
 if code == "pigeon":
     pigeon()
 elif code == "bubble":
