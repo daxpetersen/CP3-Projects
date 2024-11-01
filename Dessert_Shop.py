@@ -1,86 +1,97 @@
-class Movie:
-    def __init__(self, title, year, director, rating, genre, cast):
-        self.title = title
-        self.year = year
-        self.director = director
-        self.rating = rating
-        self.genre = genre
-        self.cast = cast
+class Contacts:
+    def __init__(self):
+        self.view = 'list'
+        self.contact_list = []
+        self.choice = None
+        self.index = None
 
-    def __str__(self):
-        return f"""Title: {self.title}
-Year: {self.year}
-Director: {self.director}
-Rating: {self.rating}
-Genre: {self.genre}
-Cast: {self.cast}"""
+    def display(self):
+        while True:
+            if self.view == 'list':
+                self.show_list()
+            elif self.view == 'info':
+                self.show_info()
+            elif self.view == 'add':
+                self.add_contact()
+            elif self.view == 'quit':
+                print("""
+                ***********************
+                Closing the contact list...
+                ***********************
+                """)
+                break
 
+    def show_list(self):
+        print("\n==== Contact List ====")
+        if len(self.contact_list) == 0:
+            self.choice = input("""
+            (A) Add a new contact
+            (Q) Quit
+            Choose an option: """).lower()
+        else:
+            for index, contact in enumerate(self.contact_list):
+                print(f"{index + 1}. {contact.first_name} {contact.last_name}")
+            self.choice = input("""
+            Select a contact by number, or choose an option:
+            (A) Add a new contact
+            (Q) Quit
+            Choose an option: """).lower()
+        self.handle_choice()
 
-class MovieCollection:
-    def __init__(self, movies):
-        self.movies = movies
+    def show_info(self):
+        self.contact_list[self.index].display_info()
+        self.choice = input("""
+        (C) Return to Contact List
+        (P) Previous Contact
+        (N) Next Contact
+        (Q) Quit
+        Choose an option: """).lower()
+        self.handle_choice()
 
-    def sort_alphabetically(self):
-        self.movies.sort(key=self.get_title)
-        return "\n\n".join(str(movie) for movie in self.movies)
+    def add_contact(self):
+        self + Information()
+        self.view = 'list'
 
-    def sort_chronologically(self):
-        self.movies.sort(key=self.get_year)
-        return "\n\n".join(str(movie) for movie in self.movies)
+    def handle_choice(self):
+        if self.choice == 'q':
+            self.view = 'quit'
+        elif self.choice == 'a' and self.view == 'list':
+            self.view = 'add'
+        elif self.choice.isnumeric() and self.view == 'list':
+            index = int(self.choice) - 1
+            if 0 <= index < len(self.contact_list):
+                self.index = index
+                self.view = 'info'
+        elif self.choice == 'c' and self.view == 'info':
+            self.view = 'list'
+        elif self.choice == 'n' and self.view == 'info':
+            self.index = self.index + 1 if self.index + 1 < len(self.contact_list) else 0
+        elif self.choice == 'p' and self.view == 'info':
+            self.index = self.index - 1 if self.index - 1 >= 0 else len(self.contact_list) - 1
 
-    def get_title(self, movie):
-        return movie.title
+    def __add__(self, new_contact):
+        self.contact_list.append(new_contact)
 
-    def get_year(self, movie):
-        return movie.year
+class Information:
+    def __init__(self):
+        self.first_name = input("Enter their first name: ")
+        self.last_name = input("Enter their last name: ")
+        self.personal_phone = input("Enter their personal phone number: ")
+        self.personal_email = input("Enter their personal email address: ")
+        self.work_phone = input("Enter their work phone number: ")
+        self.work_email = input("Enter their work email address: ")
+        self.title = input("Enter their work title: ")
 
-    def search_by_genre(self, genre):
-        matching_movies = []
-        for movie in self.movies:
-            if movie.genre.lower() == genre.lower():
-                matching_movies.append(str(movie))
-        return "\n\n".join(matching_movies)
+    def display_info(self):
+        print(f"""
+        ==== {self.first_name} {self.last_name} ====
+        Personal Phone: {self.personal_phone}
+        Personal Email: {self.personal_email}
+        Work Title: {self.title}
+        Work Phone: {self.work_phone}
+        Work Email: {self.work_email}
+        """)
 
-    def search_by_director(self, director):
-        matching_movies = []
-        for movie in self.movies:
-            if movie.director.lower() == director.lower():
-                matching_movies.append(str(movie))
-        return "\n\n".join(matching_movies)
-
-    def search_by_cast(self, cast_member):
-        matching_movies = []
-        for movie in self.movies:
-            if cast_member.lower() in movie.cast.lower():
-                matching_movies.append(str(movie))
-        return "\n\n".join(matching_movies)
-
-
-movies = [
-    Movie("The Shawshank Redemption", 1994, "Frank Darabont", "R", "Drama", "Tim Robbins, Morgan Freeman"),
-    Movie("The Godfather", 1972, "Francis Ford Coppola", "R", "Crime", "Marlon Brando, Al Pacino, James Caan"),
-    Movie("Pulp Fiction", 1994, "Quentin Tarantino", "R", "Crime", "John Travolta, Uma Thurman, Samuel L. Jackson"),
-    Movie("Inception", 2010, "Christopher Nolan", "PG-13", "Sci-Fi", "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page"),
-    Movie("The Matrix", 1999, "Lana Wachowski, Lilly Wachowski", "R", "Sci-Fi", "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss"),
-    Movie("Forrest Gump", 1994, "Robert Zemeckis", "PG-13", "Drama", "Tom Hanks, Robin Wright, Gary Sinise"),
-    Movie("The Dark Knight", 2008, "Christopher Nolan", "PG-13", "Action", "Christian Bale, Heath Ledger, Aaron Eckhart"),
-    Movie("Schindler's List", 1993, "Steven Spielberg", "R", "Drama", "Liam Neeson, Ben Kingsley, Ralph Fiennes"),
-    Movie("Fight Club", 1999, "David Fincher", "R", "Drama", "Brad Pitt, Edward Norton, Helena Bonham Carter"),
-    Movie("Goodfellas", 1990, "Martin Scorsese", "R", "Crime", "Robert De Niro, Ray Liotta, Joe Pesci")
-]
-
-collection = MovieCollection(movies)
-print("Movies sorted alphabetically:")
-print(collection.sort_alphabetically())
-
-print("\nMovies sorted chronologically:")
-print(collection.sort_chronologically())
-
-print("\nSearch results for genre 'Drama':")
-print(collection.search_by_genre("Drama"))
-
-print("\nSearch results for director 'Steven Spielberg':")
-print(collection.search_by_director("Steven Spielberg"))
-
-print("\nSearch results for cast member 'Leonardo DiCaprio':")
-print(collection.search_by_cast("Leonardo DiCaprio"))
+# Instantiate and run the Contacts program
+contacts = Contacts()
+contacts.display()
