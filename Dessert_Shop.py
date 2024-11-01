@@ -15,14 +15,14 @@ class Contacts:
                 self.add_contact()
             elif self.view == 'quit':
                 print("""
-                ***********************
-                Closing the contact list...
-                ***********************
+                
+                Closing the contact list:
+                
                 """)
                 break
 
     def show_list(self):
-        print("\n==== Contact List ====")
+        print("\n    Contact List    ")
         if len(self.contact_list) == 0:
             self.choice = input("""
             (A) Add a new contact
@@ -92,6 +92,5 @@ class Information:
         Work Email: {self.work_email}
         """)
 
-# Instantiate and run the Contacts program
 contacts = Contacts()
 contacts.display()
